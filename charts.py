@@ -1,3 +1,4 @@
+from tkinter import font
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
@@ -28,7 +29,7 @@ def draw():
         
         # creating a figure and then a chart
         x = linspace(x1,x2,1000)
-        f = Figure(figsize=(6,4))
+        f = Figure(figsize=(5,3))
         a = f.add_subplot(111)
 
         lista = formula.get().split("; ")
@@ -76,63 +77,69 @@ def insert(text):
     """
     formula.insert(len(formula.get()),text)
 
+# background color and font
+bg_color = "#b8f09c"
+text_font = "Gothic"
 
 # creating a window  
 root = tk.Tk()
 root.title("Drawing charts")
-root.geometry('650x650')
+root.geometry('700x700')
+root.configure(bg=bg_color)
+
+tk.Label(root, text="Drawing charts", font=("Roman", 40), background=bg_color).grid(row=0, columnspan=5, column=1, pady=8)
 
 # creating a space, where the chart will appear
-frame = tk.Frame(root)
-frame.place(x=25, y=230)
+frame = tk.Frame(root,background=bg_color)
+frame.place(x=100, y=340)
 
 # formula
-tk.Label(root, text="Formula: ").grid(row=0, column=0, padx=3, pady=5)
+tk.Label(root, text="Formula: ", font=(text_font,15), background=bg_color).grid(row=1, column=0, padx=3, pady=5)
 
 formula = tk.Entry(root)
-formula.grid(row=0, column=1, padx=10, pady=5)
+formula.grid(row=1, column=1, padx=10, pady=5)
 
 # chart title
-tk.Label(root, text="Chart title: ").grid(row=1, column=0, padx=3, pady=5)
+tk.Label(root, text="Chart title: ",  font=(text_font,15), background=bg_color).grid(row=2, column=0, padx=3, pady=5)
 
 entry_title = tk.Entry(root)
-entry_title.grid(row=1, column=1, padx=10, pady=5)
+entry_title.grid(row=2, column=1, padx=10, pady=5)
 
 # X axis range
-tk.Label(root, text="X axis range:").grid(row=2, column=0, padx=3, pady=2)
+tk.Label(root, text="X axis range:", font=(text_font,12), background=bg_color).grid(row=3, column=0, padx=3, pady=2)
 
 entry_range_x = tk.Entry(root)
-entry_range_x.grid(row=3, column=0, padx=3, pady=2)
+entry_range_x.grid(row=4, column=0, padx=3, pady=2)
 
 # Y axis range
-tk.Label(root, text="Y axis range:").grid(row=2, column=1, padx=10, pady=2)
+tk.Label(root, text="Y axis range:", font=(text_font,12), background=bg_color).grid(row=3, column=1, padx=10, pady=2)
 
 entry_range_y = tk.Entry(root)
-entry_range_y.grid(row=3, column=1, padx=10, pady=2)
+entry_range_y.grid(row=4, column=1, padx=10, pady=2)
 
 # X axis label
-tk.Label(root, text="X axis label:").grid(row=4, column=0, padx=3, pady=2)
+tk.Label(root, text="X axis label:", font=(text_font,12), background=bg_color).grid(row=5, column=0, padx=3, pady=2)
 
 entry_x = tk.Entry(root)
-entry_x.grid(row=5, column=0, padx=3, pady=2)
+entry_x.grid(row=6, column=0, padx=3, pady=2)
 
 # Y axis label
-tk.Label(root, text="Y axis label:").grid(row=4, column=1, padx=10, pady=2)
+tk.Label(root, text="Y axis label:", font=(text_font,12), background=bg_color).grid(row=5, column=1, padx=10, pady=2)
 
 entry_y = tk.Entry(root)
-entry_y.grid(row=5, column=1, padx=10, pady=2)
+entry_y.grid(row=6, column=1, padx=10, pady=2)
 
 # legend
 item = tk.IntVar()
-tk.Checkbutton(root, text="legend", variable=item, onvalue=1, offvalue=0).grid(row=6)
+tk.Checkbutton(root, text="legend", font=(text_font,12), background=bg_color, variable=item, onvalue=1, offvalue=0).grid(row=7, pady=5)
 
 # draw  and close button
-tk.Button(root, text="Draw", command=draw).place(x=200,y=190)
+tk.Button(root, text="Draw", command=draw, font=(text_font,12), background="#f0e96e", activebackground="#f0eb8d", width=10, height=2).place(x=200,y=280)
 
-tk.Button(root, text="Close", command=quit).place(x=300,y=190)
+tk.Button(root, text="Close", command=quit, font=(text_font,12), background="#eb6d59", activebackground="#eb998a", width=10, height=2).place(x=300,y=280)
 
-# Other buttons
-tk.Label(root, text="Buttons to build a formula:").grid(row=0, columnspan=4, column=3)
+# other buttons
+tk.Label(root, text="Buttons to build a formula:", font=(text_font,12), background=bg_color).grid(row=1, columnspan=4, column=3)
 
 b1 = ["(", ")", "+", "-", "*", "/"]
 b2 = [ "**2", "**3", "sqrt()", "abs()", "pi", "e"]
@@ -142,11 +149,11 @@ buttons = [b1, b2, b3, b4]
 
 for k in range(len(buttons)): 
     for i in range(len(buttons[k])):
-        tk.Button(root, text=buttons[k][i], command=lambda x=buttons[k][i]:insert(x)).grid(row=1+k, column=3+i, sticky="EW")
+        tk.Button(root, text=buttons[k][i], font=(text_font,10), background="#edaf72", command=lambda x=buttons[k][i]:insert(x)).grid(row=2+k, column=3+i, sticky="EW")
 
-# reating a space, where the error message will appear
+# creating a space, where the error message will appear
 label = tk.StringVar()
-tk.Label(root, textvariable=label).grid(row=5, columnspan=6, column=3)
+tk.Label(root, textvariable=label, background=bg_color, font=(text_font,10,"bold")).grid(row=6, columnspan=6, column=3)
 
 root.mainloop()
 
