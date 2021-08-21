@@ -9,24 +9,24 @@ warnings.simplefilter('error', UserWarning)
 
 def draw():
     """
-    Funkcja rysuje wykresy podanych przez użytkownika funkcji
-    i wyświtla je na wyznaczonym płótnie.
-    Genruje również podpisy pod osiami, tytuł wykresu i legendę.
+    The function that draws graphs of the function given by the user 
+    and displays them on the canvas.
+    The function generates also labels, a chart title and a legend.
     """
     
     try:
-        #niszczenie starego wykresu przed dodaniem nowego
+        # destroying the old chart before adding a new one
         for widget in frame.winfo_children():
             widget.destroy()
             
-        #zakresy
+        # ranges
         x1 = float(entry_range_x.get().split(",")[0])
         x2 = float(entry_range_x.get().split(",")[1])
 
         y1 = float(entry_range_y.get().split(",")[0])
         y2 = float(entry_range_y.get().split(",")[1])
         
-        #tworzenie wykresu
+        # creating a figure and then a chart
         x = linspace(x1,x2,1000)
         f = Figure(figsize=(6,4))
         a = f.add_subplot(111)
@@ -52,88 +52,87 @@ def draw():
         label.set("")
         
     except ValueError:
-        label.set("Brak odpowiednich danych!")
+        label.set("No appropriate data!")
 
     except NameError:
-        label.set("Zmienna musi oznaczona jako x!")
+        label.set("The variable must be marked as x")
 
     except IndexError:
-        label.set("Podano zły przedział!")
+        label.set("Wrong range has been given!")
 
     except SyntaxError:
-        label.set("Wzory funkcji muszą być oddzielone średnikiem i spacją!")
-
+        label.set("Function formulas must be separated by a semicolon and a space!")
     except TypeError:
-        label.set("Wzory funkcji muszą być oddzielone średnikiem i spacją!")
+        label.set("Function formulas must be separated by a semicolon and a space!")
 
     except UserWarning:
-        label.set("Podano zły przedział!")
+        label.set("Wrong range has been given!")
 
 def insert(text):
     """
-    Funkcja jest wywoływana po naciśnięciu jednego z przycisków do budowania wykresu funkcji,
-    wpisuje odpowiedni symbol lub funkcję elementarną
-    w miejsce przeznacozne do wpisywania wzoru funkcji
+    The function is called when pressing one of the formula-building buttons. 
+    It inserts appropriate symbol or elementary function 
+    in the place for entering the function formula.
     """
     formula.insert(len(formula.get()),text)
 
 
-#stworzenie okienka    
+# creating a window  
 root = tk.Tk()
-root.title("Rysowanie wykresów")
+root.title("Drawing charts")
 root.geometry('650x650')
 
-#stworzenie pola, na którym będzie się wyświetlać wykres
+# creating a space, where the chart will appear
 frame = tk.Frame(root)
 frame.place(x=25, y=230)
 
-#wzór funkcji
-tk.Label(root, text="Wzór funkcji: ").grid(row=0, column=0, padx=3, pady=5)
+# formula
+tk.Label(root, text="Formula: ").grid(row=0, column=0, padx=3, pady=5)
 
 formula = tk.Entry(root)
 formula.grid(row=0, column=1, padx=10, pady=5)
 
-#tytuł funkcji
-tk.Label(root, text="Tytuł rysunku: ").grid(row=1, column=0, padx=3, pady=5)
+# chart title
+tk.Label(root, text="Chart title: ").grid(row=1, column=0, padx=3, pady=5)
 
 entry_title = tk.Entry(root)
 entry_title.grid(row=1, column=1, padx=10, pady=5)
 
-#zakres osi x
-tk.Label(root, text="Zakres osi x").grid(row=2, column=0, padx=3, pady=2)
+# X axis range
+tk.Label(root, text="X axis range:").grid(row=2, column=0, padx=3, pady=2)
 
 entry_range_x = tk.Entry(root)
 entry_range_x.grid(row=3, column=0, padx=3, pady=2)
 
-#zakres osi y
-tk.Label(root, text="Zakres osi y").grid(row=2, column=1, padx=10, pady=2)
+# Y axis range
+tk.Label(root, text="Y axis range:").grid(row=2, column=1, padx=10, pady=2)
 
 entry_range_y = tk.Entry(root)
 entry_range_y.grid(row=3, column=1, padx=10, pady=2)
 
-#etykieta osi x
-tk.Label(root, text="Etykieta osi x").grid(row=4, column=0, padx=3, pady=2)
+# X axis label
+tk.Label(root, text="X axis label:").grid(row=4, column=0, padx=3, pady=2)
 
 entry_x = tk.Entry(root)
 entry_x.grid(row=5, column=0, padx=3, pady=2)
 
-#etykieta osi y
-tk.Label(root, text="Etykieta osi y").grid(row=4, column=1, padx=10, pady=2)
+# Y axis label
+tk.Label(root, text="Y axis label:").grid(row=4, column=1, padx=10, pady=2)
 
 entry_y = tk.Entry(root)
 entry_y.grid(row=5, column=1, padx=10, pady=2)
 
-#legenda
+# legend
 item = tk.IntVar()
-tk.Checkbutton(root, text="legenda", variable=item, onvalue=1, offvalue=0).grid(row=6)
+tk.Checkbutton(root, text="legend", variable=item, onvalue=1, offvalue=0).grid(row=6)
 
-#przycisk rozpoczynający progarm
-tk.Button(root, text="Narysuj", command=draw).place(x=200,y=190)
+# draw  and close button
+tk.Button(root, text="Draw", command=draw).place(x=200,y=190)
 
-tk.Button(root, text="Koniec", command=quit).place(x=300,y=190)
+tk.Button(root, text="Close", command=quit).place(x=300,y=190)
 
-#przyciski
-tk.Label(root, text="Przyciski do budowania wzoru funkcji:").grid(row=0, columnspan=4, column=3)
+# Other buttons
+tk.Label(root, text="Buttons to build a formula:").grid(row=0, columnspan=4, column=3)
 
 b1 = ["(", ")", "+", "-", "*", "/"]
 b2 = [ "**2", "**3", "sqrt()", "abs()", "pi", "e"]
@@ -145,7 +144,7 @@ for k in range(len(buttons)):
     for i in range(len(buttons[k])):
         tk.Button(root, text=buttons[k][i], command=lambda x=buttons[k][i]:insert(x)).grid(row=1+k, column=3+i, sticky="EW")
 
-#storzenie pola, gdzie będzie się wyświetlać wynik w razie błędu
+# reating a space, where the error message will appear
 label = tk.StringVar()
 tk.Label(root, textvariable=label).grid(row=5, columnspan=6, column=3)
 
