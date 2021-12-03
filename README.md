@@ -26,3 +26,6 @@ To visualise a function you have to enter **x axis** range and **y axis** range 
 At the end you can choose if you want to show a **legend** or no.
 
 To draw a chart press a **Draw** button, to close the application press **Close**.
+
+## Demo
+<img src="demo/charts_demo.gif" alt="demo" width="750"/>
