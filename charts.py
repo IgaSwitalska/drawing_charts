@@ -2,7 +2,7 @@ from tkinter import font
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-from numpy import abs, pi, sqrt, pi, e, log, log2, log10, sin, cos, tan, arcsin, arccos, arctan, exp, sign, floor, linspace
+from numpy import abs, sqrt, pi, e, log, log2, log10, sin, cos, tan, arcsin, arccos, arctan, exp, sign, floor, linspace
 import tkinter as tk
 import warnings
 
@@ -29,7 +29,7 @@ def draw():
         
         # creating a figure and then a chart
         x = linspace(x1,x2,1000)
-        f = Figure(figsize=(5,3))
+        f = Figure(figsize=(5.5,3.6))
         a = f.add_subplot(111)
 
         lista = formula.get().split("; ")
@@ -91,7 +91,7 @@ tk.Label(root, text="Drawing charts", font=("Roman", 40), background=bg_color).g
 
 # creating a space, where the chart will appear
 frame = tk.Frame(root,background=bg_color)
-frame.place(x=100, y=340)
+frame.place(x=70, y=335)
 
 # formula
 tk.Label(root, text="Formula: ", font=(text_font,15), background=bg_color).grid(row=1, column=0, padx=3, pady=5)
